@@ -1,10 +1,10 @@
 # ETH + AVAX PROOF: Intermediate EVM Course
 
-This Solidity program is a simple "My Token" contract program in solidity that demonstrates the basic features of a Token or currency like its "Name", "Total Supply" and "Abbreviation" as well as some functions such as "Mint" that can add on the token to a specific user or address and "Burn" is just the opposite of Mint. The purpose of this program is to give a basic understanding about error handling and the logic building for more such contracts.
+This Solidity program is a simple "MyContract" contract program in solidity that demonstrates the error handling using require, assert and revert methods. The purpose of this program is to give a basic understanding about error handling and the logic building for more such contracts.
 
 ## Description
 
-This program is a simple contract written in Solidity, a programming language used for developing smart contracts on the Ethereum blockchain. The contract has three functions "Mint", "Burn" and "send" that allow to add, remove or send tokens from a specific address or user. This program serves as a simple and straightforward introduction to error-handling, and can be used as a stepping stone for more complex projects in the future.
+This program is a simple contract written in Solidity, a programming language used for developing smart contracts on the Ethereum blockchain. The contract has two functions "setValue" and "divode" that allow to set the value if it's greater than 0 and divide two numbers if duvusor is not zero. This program serves as a simple and straightforward introduction to error-handling, and can be used as a stepping stone for more complex projects in the future.
 
 ## Getting Started
 
@@ -49,7 +49,7 @@ To compile the code, click on the "Solidity Compiler" tab in the left-hand sideb
 
 Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. Select the "MyToken" contract from the dropdown menu, and then click on the "Deploy" button.
 
-Once the contract is deployed, you can interact with it by calling the Mint or Burn function. Click on the "MyToken" contract in the left-hand sidebar, and then click on the "Mint" function. Then, enter the address and amount of tokens. Finally, click on the "transact" button to execute the function and retrieve the "Balance" amount. The same can be performed with Burn but it will deduct the amount enterd from total balance of that address and if the amount > Balance then, it will show a error message on console. 
+Once the contract is deployed, you can interact with it by calling the Mint or Burn function. Click on the "MyContract" contract in the left-hand sidebar, and then click on the "setValue" function. Then, enter the value. Finally, click on the "transact" button to execute the function and set the new value. The same can be performed with divide but it will need two numbers one is divident and other is divisor. 
 
 ## Authors
 
