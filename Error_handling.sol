@@ -1,29 +1,28 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.9;
 
-contract MyToken{
-    uint public totalSupply;
-    string public tokenName = "NoobCoin";
-    string public tokenAbbrv = "NBC";
-    mapping(address => uint) public addresses;
+contract myContract{
+    address public owner;
+    uint public value;
     
-     function mint(address _addr, uint _val) public {
-        require(_val > 10, "Atleast 10 tokens req. to mint!!");
-        totalSupply += _val;
-        addresses[_addr] += _val;
+    constructor(){
+        owner = msg.sender;
     }
 
-    function burn(address _addr, uint _val) public {
-        assert(addresses[_addr] >= _val);
-        totalSupply -= _val;
-        addresses[_addr] -= _val;  
+    modifier onlyOwner {
+        require(owner==msg.sender,"Only owner can access this method");
+        _;
     }
 
-    function send(address _addr, uint _val) public {
-        if(_val < 1) {
-            revert("Token must be greater than 1");
+    function setValue(uint _value) public  onlyOwner {
+        if(_value < 0){
+            revert("Value must be greater than zreo");
         }
-        addresses[_addr] += _val;
-        totalSupply += _val;
+        value = _value;
+    }
+
+    function divide(uint a,uint b) public pure returns(uint){
+        assert(b != 0);
+        return a/b;
     }
 }
