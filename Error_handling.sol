@@ -3,7 +3,7 @@ pragma solidity >=0.8.9;
 
 contract myContract{
     address public owner;
-    uint public value;
+    uint public value = 10;
     
     constructor(){
         owner = msg.sender;
@@ -15,7 +15,7 @@ contract myContract{
     }
 
     function setValue(uint _value) public  onlyOwner {
-        if(_value < 0){
+        if(_value < value){
             revert("Value must be greater than zreo");
         }
         value = _value;
