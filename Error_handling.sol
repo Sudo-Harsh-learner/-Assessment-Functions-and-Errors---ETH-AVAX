@@ -2,27 +2,40 @@
 pragma solidity >=0.8.9;
 
 contract myContract{
-    address public owner;
-    uint public value = 10;
+    mapping (address => bool) Student;
+    struct Marks{
+        uint Maths;
+        uint English;
+        uint Science;
+    } mapping(address => Marks) StudentMarks;
     
-    constructor(){
-        owner = msg.sender;
-    }
-
-    modifier onlyOwner {
-        require(owner==msg.sender,"Only owner can access this method");
+   
+    modifier isStudent(address _stu) {
+        require(Student[_stu]==true,"Only students are allowed!!");
         _;
     }
 
-    function setValue(uint _value) public  onlyOwner {
-        if(_value < value){
-            revert("Value must be greater than zreo");
-        }
-        value = _value;
+    function setStudentStatus(address _stu,bool _status) public {
+        Student[_stu] = _status;
+    }
+    
+    function setMarks(address _stu,uint _maths, uint _english, uint _science) public isStudent(_stu) {
+        StudentMarks[_stu] = Marks(_maths, _english, _science);
     }
 
-    function divide(uint a,uint b) public pure returns(uint){
-        assert(b != 0);
-        return a/b;
+    function getTotalMarks(address _student) public view isStudent(_student) returns (uint) {
+        Marks memory marks = StudentMarks[_student];
+        // assert(marks.Maths ==0 || marks.English ==0 || marks.Science ==0);
+        return marks.Maths + marks.English + marks.Science;
     }
+    
+    function CGPA(address _student) public view isStudent(_student) returns (uint) {
+        uint total = getTotalMarks(_student);
+        if (total <  120){
+            revert("You are not eligible");
+        }
+        return total/30;
+    }
+
+   
 }
