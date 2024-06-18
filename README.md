@@ -4,7 +4,7 @@ This Solidity program is a simple "MyContract" contract program in solidity that
 
 ## Description
 
-This program is a simple contract written in Solidity, a programming language used for developing smart contracts on the Ethereum blockchain. The contract has two functions "setValue" and "divode" that allow to set the value if it's greater than 0 and divide two numbers if duvusor is not zero. This program serves as a simple and straightforward introduction to error-handling, and can be used as a stepping stone for more complex projects in the future.
+This program is a simple contract written in Solidity, a programming language used for developing smart contracts on the Ethereum blockchain. The contract has four functions "setStudentStatus", "setMarks", "getTotalMarks" and "CGPA" that allow to set the status of a student and then set marks for a student as well as get total marks if student has more than zero marks in all subjects. Lastly, to get CGPA if student has minimum of 120 marks. This program serves as a simple and straightforward introduction to error-handling, and can be used as a stepping stone for more complex projects in the future.
 
 ## Getting Started
 
@@ -18,29 +18,42 @@ Once you are on the Remix website, create a new file by clicking on the "+" icon
 pragma solidity >=0.8.9;
 
 contract myContract{
-    address public owner;
-    uint public value = 10;
+    mapping (address => bool) Student;
+    struct Marks{
+        uint Maths;
+        uint English;
+        uint Science;
+    } mapping(address => Marks) StudentMarks;
     
-    constructor(){
-        owner = msg.sender;
-    }
-
-    modifier onlyOwner {
-        require(owner==msg.sender,"Only owner can access this method");
+   
+    modifier isStudent(address _stu) {
+        require(Student[_stu]==true,"Only students are allowed!!");
         _;
     }
 
-    function setValue(uint _value) public  onlyOwner {
-        if(_value <= value){
-            revert("Value must be greater than zreo");
-        }
-        value = _value;
+    function setStudentStatus(address _stu,bool _status) public {
+        Student[_stu] = _status;
+    }
+    
+    function setMarks(address _stu,uint _maths, uint _english, uint _science) public isStudent(_stu) {
+        StudentMarks[_stu] = Marks(_maths, _english, _science);
     }
 
-    function divide(uint a,uint b) public pure returns(uint){
-        assert(b != 0);
-        return a/b;
+    function getTotalMarks(address _student) public view isStudent(_student) returns (uint) {
+        Marks memory marks = StudentMarks[_student];
+        // assert(marks.Maths ==0 || marks.English ==0 || marks.Science ==0);
+        return marks.Maths + marks.English + marks.Science;
     }
+    
+    function CGPA(address _student) public view isStudent(_student) returns (uint) {
+        uint total = getTotalMarks(_student);
+        if (total <  120){
+            revert("You are not eligible");
+        }
+        return total/30;
+    }
+
+   
 }
 ```
 
@@ -49,7 +62,7 @@ To compile the code, click on the "Solidity Compiler" tab in the left-hand sideb
 
 Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. Select the "MyToken" contract from the dropdown menu, and then click on the "Deploy" button.
 
-Once the contract is deployed, you can interact with it by calling the Mint or Burn function. Click on the "MyContract" contract in the left-hand sidebar, and then click on the "setValue" function. Then, enter the value. Finally, click on the "transact" button to execute the function and set the new value. The same can be performed with divide but it will need two numbers one is divident and other is divisor. 
+Once the contract is deployed, you can interact with it by calling the Mint or Burn function. Click on the "MyContract" contract in the left-hand sidebar, and then click on the "setStudentStatus" function. Then, enter the value and click on "setMarks". Finally, click on the "transact" button to execute the function and set the new value. Then, call "getTotalMarks" and "CGPA" methods to get the results.
 
 ## Authors
 
