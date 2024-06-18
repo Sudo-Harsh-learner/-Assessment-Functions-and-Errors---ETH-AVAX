@@ -41,7 +41,7 @@ contract myContract{
 
     function getTotalMarks(address _student) public view isStudent(_student) returns (uint) {
         Marks memory marks = StudentMarks[_student];
-        assert(marks.Maths ==0 || marks.English ==0 || marks.Science ==0);
+        assert(marks.Maths !=0 || marks.English !=0 || marks.Science !=0);
         return marks.Maths + marks.English + marks.Science;
     }
     
