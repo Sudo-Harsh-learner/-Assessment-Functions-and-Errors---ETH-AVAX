@@ -41,15 +41,15 @@ contract myContract{
 
     function getTotalMarks(address _student) public view isStudent(_student) returns (uint) {
         Marks memory marks = StudentMarks[_student];
-        assert(marks.Maths !=0 || marks.English !=0 || marks.Science !=0);
+        if(marks.Maths ==0 || marks.English ==0 || marks.Science ==0){
+            revert("You are not eligible");
+        }
         return marks.Maths + marks.English + marks.Science;
     }
     
     function CGPA(address _student) public view isStudent(_student) returns (uint) {
         uint total = getTotalMarks(_student);
-        if (total <  120){
-            revert("You are not eligible");
-        }
+        assert(total > 120); 
         return total/30;
     }
 
